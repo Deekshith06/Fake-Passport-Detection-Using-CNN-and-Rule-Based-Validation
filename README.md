@@ -92,7 +92,7 @@ Currently, the web-app interface and MRZ-validation rules natively operate perfe
 
 If you are interested in making the CNN engine smarter:
 1. Fork the repo.
-2. Ping me via Issues/Discussions.
+2. Email me directly at **seelaboyinadeekshith@gmail.com**.
 3. Let's build the ultimate open-source forgery detector!
 
 ---
