@@ -190,7 +190,7 @@ st.sidebar.markdown("---")
 if page == "Verify Passport":
     st.sidebar.subheader("Settings")
     use_cnn = st.sidebar.toggle("Enable CNN Analysis", value=True, help="Uses deep learning to visually flag inconsistencies even if the MRZ math passes.")
-    run_forensics = st.sidebar.toggle("Enable Background Forensics", value=False, help="Runs FFT and Font Spacing analysis. (Slower)")
+    enable_forensics = st.sidebar.toggle("Enable Background Forensics", value=False, help="Runs FFT and Font Spacing analysis. (Slower)")
 
 # --- PAGE: VERIFY ---
 if page == "Verify Passport":
@@ -277,12 +277,12 @@ if page == "Verify Passport":
                         else:
                              st.markdown('<div class="val-box real">[PASS] PASSED MRZ LAYER<div class="status-text">Note: CNN visual layer was bypassed.</div></div>', unsafe_allow_html=True)
                                 
-                        if run_forensics:
+                        if enable_forensics:
                             if img_file:
                                 with st.expander("Advanced Background Forensics"):
                                     try:
                                         # To avoid variable shadowing issues with the boolean toggle
-                                        f_res = globals()['run_forensics'](img_arr)
+                                        f_res = run_forensics(img_arr)
                                         
                                         st.write("**1. Font Tracking Analysis (OCR-B Standard)**")
                                         if f_res['spacing_consistent']: st.success(f"[PASS] Consistent character spacing. (Variance: {f_res['spacing_variance']:.2f})")
