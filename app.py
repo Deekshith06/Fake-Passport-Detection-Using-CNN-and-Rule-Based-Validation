@@ -280,15 +280,18 @@ if page == "Verify Passport":
                         if run_forensics:
                             if img_file:
                                 with st.expander("Advanced Background Forensics"):
-                                    f_res = run_forensics(img_arr)
-                                    
-                                    st.write("**1. Font Tracking Analysis (OCR-B Standard)**")
-                                    if f_res['spacing_consistent']: st.success(f"[PASS] Consistent character spacing. (Variance: {f_res['spacing_variance']:.2f})")
-                                    else: st.error(f"[FAIL] Inconsistent character spacing detected! (Variance: {f_res['spacing_variance']:.2f})")
-                                    
-                                    st.write("**2. Guilloche Pattern Autocorrelation (FFT)**")
-                                    if f_res['pattern_genuine']: st.success(f"[PASS] High-frequency security patterns verified. (Ratio: {f_res['fft_ratio']:.2f})")
-                                    else: st.error(f"[FAIL] Background pattern lacks detail or is overly compressed. (Ratio: {f_res['fft_ratio']:.2f})")
+                                    try:
+                                        f_res = run_forensics(img_arr)
+                                        
+                                        st.write("**1. Font Tracking Analysis (OCR-B Standard)**")
+                                        if f_res['spacing_consistent']: st.success(f"[PASS] Consistent character spacing. (Variance: {f_res['spacing_variance']:.2f})")
+                                        else: st.error(f"[FAIL] Inconsistent character spacing detected! (Variance: {f_res['spacing_variance']:.2f})")
+                                        
+                                        st.write("**2. Guilloche Pattern Autocorrelation (FFT)**")
+                                        if f_res['pattern_genuine']: st.success(f"[PASS] High-frequency security patterns verified. (Ratio: {f_res['fft_ratio']:.2f})")
+                                        else: st.error(f"[FAIL] Background pattern lacks detail or is overly compressed. (Ratio: {f_res['fft_ratio']:.2f})")
+                                    except Exception as e:
+                                        st.error(f"⚠️ Could not complete forensics analysis on this image. Error: {str(e)}")
                             else:
                                 st.warning("⚠️ **Image Required:** Background forensics skipped because no passport image was uploaded.")
 
