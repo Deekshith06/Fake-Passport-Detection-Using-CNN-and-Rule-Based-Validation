@@ -125,10 +125,10 @@ def run_forensics(img_array):
     pattern_genuine = ratio > 50
 
     return {
-        "spacing_consistent": spacing_consistent,
-        "spacing_variance": spacing_var,
-        "pattern_genuine": pattern_genuine,
-        "fft_ratio": ratio,
+        "spacing_consistent": bool(spacing_consistent),
+        "spacing_variance": float(spacing_var),
+        "pattern_genuine": bool(pattern_genuine),
+        "fft_ratio": float(ratio),
         "overall_pass": bool(spacing_consistent) and bool(pattern_genuine)
     }
 
