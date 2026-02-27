@@ -190,7 +190,7 @@ st.sidebar.markdown("---")
 if page == "Verify Passport":
     st.sidebar.subheader("Settings")
     use_cnn = st.sidebar.toggle("Enable CNN Analysis", value=True, help="Uses deep learning to visually flag inconsistencies even if the MRZ math passes.")
-    enable_forensics = st.sidebar.toggle("Enable Background Forensics", value=False, help="Runs FFT and Font Spacing analysis. (Slower)")
+    enable_forensics = st.sidebar.toggle("Enable Background Forensics", value=True, help="Runs FFT and Font Spacing analysis. (Slower)")
 
 # --- PAGE: VERIFY ---
 if page == "Verify Passport":
@@ -201,7 +201,8 @@ if page == "Verify Passport":
     <div class="instruction-card">
         <strong>Welcome! How to use:</strong><br/>
         1. Upload a clear, glare-free image of the passport photo page.<br/>
-        2. Paste the two lines of text from the very bottom of the document (the MRZ) into the verification box.
+        2. Paste the two lines of text from the very bottom of the document (the MRZ) into the verification box.<br/>
+        3. Click the <strong>Verify Data</strong> button to analyze.
     </div>
     """, unsafe_allow_html=True)
     
@@ -218,9 +219,11 @@ if page == "Verify Passport":
             
         st.subheader("2. Enter MRZ Data")
         mrz_input = st.text_area("Paste exactly 2 lines (44 characters each):", height=110, placeholder="P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<\nL898902C36UTO7408122F1204159ZE184226B<<<<<10")
+        
+        verify_button = st.button("Verify Data", use_container_width=True)
             
     with col_results:
-        if mrz_input and len(mrz_input.strip()) > 20:
+        if verify_button and mrz_input and len(mrz_input.strip()) > 20:
             with st.spinner("Analyzing document cryptography..."):
                 fields, checksums = verify_all_checksums(mrz_input)
                 
