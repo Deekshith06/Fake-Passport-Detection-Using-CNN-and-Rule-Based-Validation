@@ -281,7 +281,8 @@ if page == "Verify Passport":
                             if img_file:
                                 with st.expander("Advanced Background Forensics"):
                                     try:
-                                        f_res = run_forensics(img_arr)
+                                        # To avoid variable shadowing issues with the boolean toggle
+                                        f_res = globals()['run_forensics'](img_arr)
                                         
                                         st.write("**1. Font Tracking Analysis (OCR-B Standard)**")
                                         if f_res['spacing_consistent']: st.success(f"[PASS] Consistent character spacing. (Variance: {f_res['spacing_variance']:.2f})")
